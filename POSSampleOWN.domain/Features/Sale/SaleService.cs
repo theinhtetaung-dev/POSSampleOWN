@@ -155,12 +155,14 @@ public class SaleService : ISaleService
         {
             Id = sale.Id,
             TotalPrice = sale.TotalPrice,
+            TotalPriceFormatted = sale.TotalPrice.ToString("N0"),
             VoucherCode = sale.VoucherCode,
             SaleItems = sale.SaleItems.Select(x => new SaleItemDTO
             {
                 ProductName = product.TryGetValue(x.ProductId, out var name) ? name : "Unknown Product",
                 Quantity = x.Quantity,
-                Price = x.Price
+                Price = x.Price,
+                PriceFormatted = x.Price.ToString("N0")
             }).ToList()
         };
         return ApiResponse<SaleDTO>.Success(resModel);
