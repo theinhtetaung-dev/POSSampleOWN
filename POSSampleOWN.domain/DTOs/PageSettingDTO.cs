@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace POSSampleOWN.domain.DTOs;
+namespace YaungMel_POS.domain.DTOs;
 
 public class PageSettingDTO
 {

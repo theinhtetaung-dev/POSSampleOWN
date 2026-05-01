@@ -32,9 +32,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\POSSampleOWN.database\POSSampleOWN.database.csproj" />
-	  <ProjectReference Include="..\POSSampleOWN.domain\POSSampleOWN.domain.csproj" />
-	  <ProjectReference Include="..\POSSampleOWN.shared\POSSampleOWN.shared.csproj" />
+	  <ProjectReference Include="..\POSSampleOWN.database\YaungMel_POS.database.csproj" />
+	  <ProjectReference Include="..\POSSampleOWN.domain\YaungMel_POS.domain.csproj" />
+	  <ProjectReference Include="..\POSSampleOWN.shared\YaungMel_POS.shared.csproj" />
 	</ItemGroup>
 
 </Project>

@@ -2,12 +2,11 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using POSSampleOWN.domain;
-using POSSampleOWN.domain.Features;
-using POSSampleOWN.domain.Middlewares;
 using Scalar.AspNetCore;
 using Serilog;
 using System.Text;
+using YaungMel_POS.domain.Features;
+using YaungMel_POS.domain.Middlewares;
 
 try
 {

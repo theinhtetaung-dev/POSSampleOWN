@@ -5,7 +5,7 @@ using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
-namespace POSSampleOWN.shared;
+namespace YaungMel_POS.shared;
 
 [JsonConverter(typeof(JsonStringEnumConverter))]
 public enum CustomerTier

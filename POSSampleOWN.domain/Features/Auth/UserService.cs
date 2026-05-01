@@ -1,12 +1,12 @@
 using Microsoft.EntityFrameworkCore;
-using POSSampleOWN.database.Data;
-using POSSampleOWN.database.Models;
-using POSSampleOWN.DTOs;
-using POSSampleOWN.Responses;
+using YaungMel_POS.database.Models;
 using System.Security.Claims;
 using System.Text.RegularExpressions;
+using YaungMel_POS.database.Data;
+using YaungMel_POS.domain.DTOs;
+using YaungMel_POS.shared.Responses;
 
-namespace POSSampleOWN.domain.Features.Auth
+namespace YaungMel_POS.domain.Features.Auth
 {
     public class UserService : IUserService
     {

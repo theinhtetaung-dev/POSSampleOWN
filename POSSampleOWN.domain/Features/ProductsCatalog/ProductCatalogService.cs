@@ -1,15 +1,15 @@
 using Microsoft.EntityFrameworkCore;
-using POSSampleOWN.database.Data;
-using POSSampleOWN.database.Models;
-using POSSampleOWN.Responses;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using POSSampleOWN.domain.DTOs;
+using YaungMel_POS.database.Data;
+using YaungMel_POS.database.Models;
+using YaungMel_POS.domain.DTOs;
+using YaungMel_POS.shared.Responses;
 
-namespace POSSampleOWN.domain.Features.ProductsCatalog
+namespace YaungMel_POS.domain.Features.ProductsCatalog
 {
     public class ProductCatalogService: IProductCatalogService
     {
@@ -345,7 +345,7 @@ namespace POSSampleOWN.domain.Features.ProductsCatalog
             try
             {
                 var products = await ActiveProductQuery
-                    .Where(p => p.Name.Contains(term) || (p.Description != null && p.Description.Contains(term)))
+                    .Where(p => p.Name.Contains(term) || p.Description != null && p.Description.Contains(term))
                     .Select(p => new ProductDTO
                     {
                         Id = p.Id,
@@ -578,7 +578,7 @@ namespace POSSampleOWN.domain.Features.ProductsCatalog
             {
                 var categories = await _db.Categories
                     .AsNoTracking()
-                    .Where(c => c.Name.Contains(term) || (c.Description != null && c.Description.Contains(term)))
+                    .Where(c => c.Name.Contains(term) || c.Description != null && c.Description.Contains(term))
                     .Select(c => new CategoryDTO
                     {
                         Id = c.Id,

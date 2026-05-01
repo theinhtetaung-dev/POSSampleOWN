@@ -1,12 +1,11 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
-using POSSampleOWN.Responses;
 using System.Threading.Tasks;
 using System.Security.Claims;
-using POSSampleOWN.domain.Features.ProductsCatalog;
-using POSSampleOWN.domain.DTOs;
+using YaungMel_POS.domain.DTOs;
+using YaungMel_POS.shared.Responses;
 
-namespace POSSampleOWN.Controllers
+namespace YaungMel_POS.domain.Features.ProductsCatalog
 {
     [ApiController]
     [Route("api/categories")]

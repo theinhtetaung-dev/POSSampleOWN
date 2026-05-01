@@ -1,7 +1,7 @@
-using POSSampleOWN.domain.DTOs;
-using POSSampleOWN.Responses;
+using YaungMel_POS.domain.DTOs;
+using YaungMel_POS.shared.Responses;
 
-namespace POSSampleOWN.domain.Features.ProductsCatalog
+namespace YaungMel_POS.domain.Features.ProductsCatalog
 {
     public interface IProductCatalogService
     {

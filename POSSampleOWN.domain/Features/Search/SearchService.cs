@@ -1,16 +1,15 @@
 using Microsoft.EntityFrameworkCore;
-using POSSampleOWN.database.Data;
-using POSSampleOWN.database.Models;
-using POSSampleOWN.domain.DTOs;
-using POSSampleOWN.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static POSSampleOWN.DTOs.SearchProductRequestDTO;
+using YaungMel_POS.database.Data;
+using YaungMel_POS.database.Models;
+using YaungMel_POS.domain.DTOs;
+using static YaungMel_POS.domain.DTOs.SearchProductRequestDTO;
 
-namespace POSSampleOWN.domain.Features.Search
+namespace YaungMel_POS.domain.Features.Search
 {
     public class SearchService : ISearchService
     {
@@ -86,9 +85,9 @@ namespace POSSampleOWN.domain.Features.Search
 
             query = searchRequest.SortBy switch
             {
-                SearchProductRequestDTO.SortOptions.name => searchRequest.IsDescending ? query.OrderByDescending(p => p.Name) : query.OrderBy(p => p.Name),
-                SearchProductRequestDTO.SortOptions.price => searchRequest.IsDescending ? query.OrderByDescending(p => p.Price) : query.OrderBy(p => p.Price),
-                SearchProductRequestDTO.SortOptions.createdDate => searchRequest.IsDescending ? query.OrderByDescending(p => p.CreatedAt) : query.OrderBy(p => p.CreatedAt),
+                SortOptions.name => searchRequest.IsDescending ? query.OrderByDescending(p => p.Name) : query.OrderBy(p => p.Name),
+                SortOptions.price => searchRequest.IsDescending ? query.OrderByDescending(p => p.Price) : query.OrderBy(p => p.Price),
+                SortOptions.createdDate => searchRequest.IsDescending ? query.OrderByDescending(p => p.CreatedAt) : query.OrderBy(p => p.CreatedAt),
                 _ => query
             };
 

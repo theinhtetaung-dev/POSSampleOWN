@@ -1,13 +1,12 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using POSSampleOWN.domain.DTOs;
-using POSSampleOWN.domain.Features.Point;
-using POSSampleOWN.Responses;
-using POSSampleOWN.shared;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using YaungMel_POS.domain.DTOs;
+using YaungMel_POS.shared;
+using YaungMel_POS.shared.Responses;
 
-namespace POSSampleOWN;
+namespace YaungMel_POS.domain.Features.Point;
 
 [Route("api/points")]
 [ApiController]

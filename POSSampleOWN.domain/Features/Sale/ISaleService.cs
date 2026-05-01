@@ -1,13 +1,13 @@
-using POSSampleOWN.database.Models;
-using POSSampleOWN.domain.DTOs;
-using POSSampleOWN.Responses;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using YaungMel_POS.database.Models;
+using YaungMel_POS.domain.DTOs;
+using YaungMel_POS.shared.Responses;
 
-namespace POSSampleOWN.domain.Features.Sale
+namespace YaungMel_POS.domain.Features.Sale
 {
     public interface ISaleService
     {

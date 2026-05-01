@@ -1,6 +1,6 @@
-using POSSampleOWN.DTOs;
+using YaungMel_POS.domain.DTOs;
 
-namespace POSSampleOWN.domain.Features.Auth;
+namespace YaungMel_POS.domain.Features.Auth;
 
 public interface IAuthService
 {

@@ -1,4 +1,4 @@
-﻿namespace POSSampleOWN.DTOs
+﻿namespace YaungMel_POS.domain.DTOs
 {
     public class SearchDTO
     {

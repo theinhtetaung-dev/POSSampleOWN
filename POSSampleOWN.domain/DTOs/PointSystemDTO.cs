@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
-using POSSampleOWN.shared;
+using YaungMel_POS.shared;
 
-namespace POSSampleOWN.domain.DTOs;
+namespace YaungMel_POS.domain.DTOs;
 
 public class AccountItemDTO
 {

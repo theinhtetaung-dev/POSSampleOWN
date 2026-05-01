@@ -1,13 +1,13 @@
 using Microsoft.EntityFrameworkCore;
-using POSSampleOWN.database.Data;
-using POSSampleOWN.domain.DTOs;
-using POSSampleOWN.Responses;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using YaungMel_POS.database.Data;
+using YaungMel_POS.domain.DTOs;
+using YaungMel_POS.shared.Responses;
 
-namespace POSSampleOWN.domain.Features.Dashboard;
+namespace YaungMel_POS.domain.Features.Dashboard;
 
 public class DashboardService : IDashboardService
 {
@@ -85,7 +85,7 @@ public class DashboardService : IDashboardService
                     groupedData = sales
                         .GroupBy(s => new
                         {
-                            Year = s.CreatedAt.Year,
+                            s.CreatedAt.Year,
                             Week = CultureInfo.CurrentCulture.Calendar
                                 .GetWeekOfYear(s.CreatedAt, CalendarWeekRule.FirstFourDayWeek, DayOfWeek.Monday)
                         })

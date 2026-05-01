@@ -1,12 +1,12 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
-using POSSampleOWN.database.Models;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
+using YaungMel_POS.database.Models;
 
-namespace POSSampleOWN.domain.Features.Auth;
+namespace YaungMel_POS.domain.Features.Auth;
 
 public class TokenService : ITokenService
 {

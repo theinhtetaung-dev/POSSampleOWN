@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace POSSampleOWN.database.Models;
+namespace YaungMel_POS.database.Models;
 
 public class Tbl_Category
 {

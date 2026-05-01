@@ -1,13 +1,13 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System.Text.RegularExpressions;
-using POSSampleOWN.database.Data;
-using POSSampleOWN.database.Models;
-using POSSampleOWN.DTOs;
+using YaungMel_POS.database.Models;
 using System.Security.Cryptography;
 using System.Text;
+using YaungMel_POS.domain.DTOs;
+using YaungMel_POS.database.Data;
 
-namespace POSSampleOWN.domain.Features.Auth;
+namespace YaungMel_POS.domain.Features.Auth;
 
 public class AuthService : IAuthService
 {

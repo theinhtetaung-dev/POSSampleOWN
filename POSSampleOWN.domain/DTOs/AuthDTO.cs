@@ -1,7 +1,7 @@
-using POSSampleOWN.database.Models;
 using System.ComponentModel.DataAnnotations;
+using YaungMel_POS.database.Models;
 
-namespace POSSampleOWN.DTOs
+namespace YaungMel_POS.domain.DTOs
 {
     public class LoginRequest
     {

@@ -1,9 +1,9 @@
-using POSSampleOWN.domain.DTOs;
-using POSSampleOWN.Responses;
 using System;
 using System.Collections.Generic;
+using YaungMel_POS.domain.DTOs;
+using YaungMel_POS.shared.Responses;
 
-namespace POSSampleOWN.domain.Features.Dashboard;
+namespace YaungMel_POS.domain.Features.Dashboard;
 
 public interface IDashboardService
 {

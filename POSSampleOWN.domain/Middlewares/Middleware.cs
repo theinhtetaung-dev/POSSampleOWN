@@ -2,14 +2,14 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.Extensions.DependencyInjection;
-using POSSampleOWN.domain.Features.Auth;
 using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using YaungMel_POS.domain.Features.Auth;
 
-namespace POSSampleOWN.domain.Middlewares;
+namespace YaungMel_POS.domain.Middlewares;
 
 public class Middleware
 {

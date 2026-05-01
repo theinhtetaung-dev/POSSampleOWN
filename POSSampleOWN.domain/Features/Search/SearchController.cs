@@ -1,14 +1,14 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
-using POSSampleOWN.DTOs;
-using POSSampleOWN.Responses;
+using YaungMel_POS.shared.Responses;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using YaungMel_POS.domain.DTOs;
 
-namespace POSSampleOWN.domain.Features.Search
+namespace YaungMel_POS.domain.Features.Search
 {
     [ApiController]
     [Route("api/search")]

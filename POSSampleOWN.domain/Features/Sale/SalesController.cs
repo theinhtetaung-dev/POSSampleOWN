@@ -1,14 +1,13 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
-using POSSampleOWN.domain.Features.Sale;
-using POSSampleOWN.domain.DTOs;
-using POSSampleOWN.Responses;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Security.Claims;
+using YaungMel_POS.domain.DTOs;
+using YaungMel_POS.shared.Responses;
 
 
-namespace POSSampleOWN.Controllers
+namespace YaungMel_POS.domain.Features.Sale
 {
     [Route("api/sales")]
     [ApiController]

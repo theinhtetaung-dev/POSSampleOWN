@@ -1,8 +1,8 @@
-using POSSampleOWN.Responses;
-using POSSampleOWN.DTOs;
 using System.Threading.Tasks;
+using YaungMel_POS.domain.DTOs;
+using YaungMel_POS.shared.Responses;
 
-namespace POSSampleOWN.domain.Features.Auth
+namespace YaungMel_POS.domain.Features.Auth
 {
     public interface IUserService
     {

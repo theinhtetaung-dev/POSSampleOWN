@@ -1,4 +1,4 @@
-namespace POSSampleOWN.database.Models;
+namespace YaungMel_POS.database.Models;
 
 public class Tbl_User_Token
 {

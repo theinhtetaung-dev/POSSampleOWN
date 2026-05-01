@@ -1,10 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
-using POSSampleOWN.domain.Features.Dashboard;
-using POSSampleOWN.Responses;
+using YaungMel_POS.shared.Responses;
 using System;
 
-namespace POSSampleOWN.Controllers;
+namespace YaungMel_POS.domain.Features.Dashboard;
 
 [Route("api/dashboard")]
 [ApiController]

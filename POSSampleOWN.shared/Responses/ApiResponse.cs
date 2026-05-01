@@ -1,4 +1,4 @@
-﻿namespace POSSampleOWN.Responses
+﻿namespace YaungMel_POS.shared.Responses
 {
     public class ApiResponse<T>
     {

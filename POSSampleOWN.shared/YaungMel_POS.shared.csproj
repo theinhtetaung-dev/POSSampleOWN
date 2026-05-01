@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\POSSampleOWN.database\POSSampleOWN.database.csproj" />
+    <ProjectReference Include="..\POSSampleOWN.database\YaungMel_POS.database.csproj" />
   </ItemGroup>
 
 </Project>

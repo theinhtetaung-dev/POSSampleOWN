@@ -1,12 +1,11 @@
-﻿using POSSampleOWN.domain.DTOs;
-using POSSampleOWN.DTOs;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using YaungMel_POS.domain.DTOs;
 
-namespace POSSampleOWN.domain.Features.Search
+namespace YaungMel_POS.domain.Features.Search
 {
     public interface ISearchService
     {

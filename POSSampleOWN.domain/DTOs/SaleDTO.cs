@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using POSSampleOWN.database.Models;
+using YaungMel_POS.database.Models;
 
-namespace POSSampleOWN.domain.DTOs;
+namespace YaungMel_POS.domain.DTOs;
 
 public class SaleDTO
 {
@@ -21,7 +21,7 @@ public class SaleDTO
 }
 public class SaleItemDTO
 {
-    public String ProductName { get; set; } = null!;
+    public string ProductName { get; set; } = null!;
 
     public int Quantity { get; set; }
 

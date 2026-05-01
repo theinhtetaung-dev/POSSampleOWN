@@ -8,23 +8,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using YaungMel_POS.domain.Features.Inventory;
+using YaungMel_POS.domain.Features.Auth;
+using YaungMel_POS.domain.Features.Sale;
+using YaungMel_POS.domain.Features.ProductsCatalog;
+using YaungMel_POS.domain.Features.Point;
+using YaungMel_POS.domain.Features.Dashboard;
+using YaungMel_POS.domain.Features.Search;
+using YaungMel_POS.database.Data;
 
-using POSSampleOWN.domain.Features.ProductsCatalog;
-using POSSampleOWN.domain.Features.Search;
-using POSSampleOWN.domain.Features.Inventory;
-using POSSampleOWN.domain.Features.Sale;
-using POSSampleOWN.domain.Features.Dashboard;
-using POSSampleOWN.domain.Features.Auth;
-using POSSampleOWN.domain.Features.Point;
-
-namespace POSSampleOWN.domain.Features
+namespace YaungMel_POS.domain.Features
 {
     public static class FeaturesManager
     {
         public static void AddDomain(this WebApplicationBuilder builder)
         {
             
-            builder.Services.AddDbContext<POSSampleOWN.database.Data.POSDbContext>(options =>
+            builder.Services.AddDbContext<POSDbContext>(options =>
             options.UseNpgsql(builder.Configuration.GetConnectionString("POSConnectionString")));
             var loyaltySettings = builder.Configuration.GetSection("LoyaltyApiSettings");
 

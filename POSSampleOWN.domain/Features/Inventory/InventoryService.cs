@@ -1,11 +1,11 @@
 using Microsoft.EntityFrameworkCore;
-using POSSampleOWN.database.Data;
-using POSSampleOWN.database.Models;
-using POSSampleOWN.Responses;
 using Serilog.Core;
-using POSSampleOWN.domain.DTOs;
+using YaungMel_POS.database.Data;
+using YaungMel_POS.database.Models;
+using YaungMel_POS.domain.DTOs;
+using YaungMel_POS.shared.Responses;
 
-namespace POSSampleOWN.domain.Features.Inventory
+namespace YaungMel_POS.domain.Features.Inventory
 {
     public class InventoryService : IInventoryService
     {

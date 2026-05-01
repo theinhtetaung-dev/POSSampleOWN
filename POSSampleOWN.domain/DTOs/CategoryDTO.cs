@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace POSSampleOWN.domain.DTOs;
+namespace YaungMel_POS.domain.DTOs;
 
 public class CategoryDTO
 {

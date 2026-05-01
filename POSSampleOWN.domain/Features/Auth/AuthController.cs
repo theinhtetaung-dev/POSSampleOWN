@@ -1,12 +1,11 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using POSSampleOWN.domain.Features.Auth;
-using POSSampleOWN.DTOs;
-using POSSampleOWN.Responses;
 using System.Security.Claims;
+using YaungMel_POS.domain.DTOs;
+using YaungMel_POS.shared.Responses;
 
-namespace POSSampleOWN.Controllers;
+namespace YaungMel_POS.domain.Features.Auth;
 
 [Route("api/auth")]
 [ApiController]
