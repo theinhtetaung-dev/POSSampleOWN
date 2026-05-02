@@ -27,14 +27,6 @@ namespace YaungMel_POS.domain.Features.ProductsCatalog
             return userIdClaim != null ? int.Parse(userIdClaim.Value) : 0;
         }
 
-        // GET: api/products/
-        [HttpGet]
-        public async Task<IActionResult> GetAll()
-        {
-            var result = await _service.GetAllProductsAsync();
-            return Ok(result);
-        }
-
         // GET: api/products/paged?pageNo=1&pageSize=10
         [HttpGet("paged")]
         public async Task<IActionResult> GetProductsPaged([FromQuery] int pageNo = 1, [FromQuery] int pageSize = 10)

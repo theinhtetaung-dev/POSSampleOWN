@@ -106,38 +106,6 @@ public class SaleService : ISaleService
     }
     #endregion
 
-    #region Get All Sales
-    public async Task<ApiResponse<List<SaleDTO>>> GetAllSalesAsync()
-    {
-        try
-        {
-            var resModel = await _db.Sales
-            .AsNoTracking()
-            .OrderByDescending(s => s.Id)
-            .Select(sale => new SaleDTO
-            {
-                Id = sale.Id,
-                TotalPrice = sale.TotalPrice,
-                TotalPriceFormatted = sale.TotalPrice.ToString("N0"),
-                VoucherCode = sale.VoucherCode,
-                SaleItems = sale.SaleItems.Select(item => new SaleItemDTO
-                {
-                    ProductName = item.Product.Name ?? "Unknown Product",
-                    Quantity = item.Quantity,
-                    Price = item.Price,
-                    PriceFormatted = item.Price.ToString("N0")
-                }).ToList()
-            })
-            .ToListAsync();
-            return ApiResponse<List<SaleDTO>>.Success(resModel);
-        }
-        catch (Exception ex)
-        {
-            return ApiResponse<List<SaleDTO>>.Fail($"Error: {ex.Message}");
-        }
-    }
-    #endregion
-
     #region Get All Sale Paignation 
     public async Task<ApiResponse<SaleListResponseDTO>> GetSalesAsync(int pageNo, int pageSize)
     {
@@ -184,6 +152,7 @@ public class SaleService : ISaleService
         }
     }
     #endregion
+
     #region Get Sale By Voucher code
     public async Task<ApiResponse<SaleDTO>> GetSaleByVoucherCodeAsync(string  voucherCode)
     {

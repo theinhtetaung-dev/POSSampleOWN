@@ -24,36 +24,6 @@ namespace YaungMel_POS.domain.Features.ProductsCatalog
             .AsNoTracking()
             .Where(p => !p.DeleteFlag && p.IsActive);
 
-        #region get all products
-        public async Task<ApiResponse<List<ProductDTO>>> GetAllProductsAsync()
-        {
-            try
-            {
-                var products = await _db.Products
-                    .AsNoTracking()
-                    .Select(p => new ProductDTO
-                    {
-                        Id = p.Id,
-                        Name = p.Name,
-                        Description = p.Description,
-                        Price = p.Price,
-                        StockQuantity = p.StockQuantity,
-                        CategoryId = p.CategoryId,
-                        DeleteFlag = p.DeleteFlag,
-                        IsActive = p.IsActive,
-                    })
-                    .ToListAsync();
-
-                return ApiResponse<List<ProductDTO>>.Success(products);
-            }
-            catch (Exception ex)
-            {
-                return ApiResponse<List<ProductDTO>>.Fail(ex.Message);
-            }
-        }
-
-        #endregion
-
         #region get Product Pagination
         public async Task<ApiResponse<ProductListResponseDTO>> GetProductsAsync(int pageNo, int pageSize)
         {
@@ -362,30 +332,6 @@ namespace YaungMel_POS.domain.Features.ProductsCatalog
             catch (Exception ex)
             {
                 return ApiResponse<List<ProductDTO>>.Fail(ex.Message);
-            }
-        }
-        #endregion
-
-        #region get all categories
-        public async Task<ApiResponse<List<CategoryDTO>>> GetAllCategoriesAsync()
-        {
-            try
-            {
-                var categories = await _db.Categories
-                    .AsNoTracking()
-                    .Select(c => new CategoryDTO
-                    {
-                        Id = c.Id,
-                        Name = c.Name,
-                        Description = c.Description
-                    })
-                    .ToListAsync();
-
-                return ApiResponse<List<CategoryDTO>>.Success(categories);
-            }
-            catch (Exception ex)
-            {
-                return ApiResponse<List<CategoryDTO>>.Fail(ex.Message);
             }
         }
         #endregion

@@ -12,7 +12,6 @@ namespace YaungMel_POS.domain.Features.Sale
     public interface ISaleService
     {
         Task<ApiResponse<SaleDTO>> CreateSaleAsync(CreateSaleDTO reqSale, int userId);
-        Task<ApiResponse<List<SaleDTO>>> GetAllSalesAsync();
         Task<ApiResponse<SaleListResponseDTO>> GetSalesAsync(int pageNo, int pageSize);
 
         Task<ApiResponse<SaleDTO>> GetSaleByVoucherCodeAsync(string voucherCode);

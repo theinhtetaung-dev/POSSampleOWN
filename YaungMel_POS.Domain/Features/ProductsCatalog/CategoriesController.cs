@@ -27,12 +27,6 @@ namespace YaungMel_POS.domain.Features.ProductsCatalog
 
         // GET: api/categories/
         [HttpGet]
-        public async Task<IActionResult> GetAll()
-        {
-            var result = await _service.GetAllCategoriesAsync();
-            return Ok(result);
-        }
-
         // GET: api/categories/paged?pageNo=1&pageSize=10
         [HttpGet("paged")]
         public async Task<IActionResult> GetCaetgoryByPage([FromQuery] int pageNo = 1, [FromQuery] int pageSize = 10)
