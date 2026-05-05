@@ -1,9 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
-using YaungMel_POS.shared.Responses;
+using YaungMel_POS.Shared.Responses;
 using System;
 
-namespace YaungMel_POS.domain.Features.Dashboard;
+namespace YaungMel_POS.Domain.Features.Dashboard;
 
 [Route("api/dashboard")]
 [ApiController]

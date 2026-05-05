@@ -1,6 +1,7 @@
+using Microsoft.AspNetCore.Http;
 using System.ComponentModel.DataAnnotations;
 
-namespace YaungMel_POS.domain.DTOs;
+namespace YaungMel_POS.Domain.DTOs;
 
 public class ProductDTO
 {
@@ -13,6 +14,8 @@ public class ProductDTO
     public bool DeleteFlag { get; set; }
     public bool IsActive { get; set; }
     public uint Version { get; set; }
+    public string? ImageUrl { get; set; }
+    public string? ImageId { get; set; }
 }
 
 public class CreateProductDTO
@@ -22,6 +25,13 @@ public class CreateProductDTO
     public string Name { get; set; } = string.Empty;
     [MaxLength(500)]
     public string? Description { get; set; }
+    public string? ImageUrl { get; set; }
+    public string? ImageId { get; set; }
+    public string? ImagePublicId
+    {
+        get => ImageId;
+        set => ImageId = value;
+    }
     [Required]
     public decimal Price { get; set; }
     [Required]
@@ -31,7 +41,7 @@ public class CreateProductDTO
 
     [Required]
     public int CategoryId { get; set; }
-    // public int CreatedBy { get; set; }
+
 }
 
 public class UpdateProductDTO

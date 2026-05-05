@@ -1,4 +1,4 @@
-﻿namespace YaungMel_POS.shared.Responses;
+﻿namespace YaungMel_POS.Shared.Responses;
 
 public class Result<T>
 {

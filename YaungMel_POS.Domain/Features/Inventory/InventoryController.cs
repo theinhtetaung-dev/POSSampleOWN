@@ -1,10 +1,10 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using System;
-using YaungMel_POS.domain.DTOs;
-using YaungMel_POS.shared.Responses;
+using YaungMel_POS.Domain.DTOs;
+using YaungMel_POS.Shared.Responses;
 
-namespace YaungMel_POS.domain.Features.Inventory
+namespace YaungMel_POS.Domain.Features.Inventory
 {
     [Route("api/inventory")]
     [ApiController]

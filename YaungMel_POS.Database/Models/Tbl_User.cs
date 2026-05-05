@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace YaungMel_POS.database.Models;
+namespace YaungMel_POS.Database.Models;
 
 public class Tbl_User
 {

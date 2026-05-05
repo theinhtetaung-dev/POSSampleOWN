@@ -1,15 +1,10 @@
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using YaungMel_POS.database.Data;
-using YaungMel_POS.database.Models;
-using YaungMel_POS.domain.DTOs;
-using static YaungMel_POS.domain.DTOs.SearchProductRequestDTO;
+using YaungMel_POS.Database.Data;
+using YaungMel_POS.Database.Models;
+using YaungMel_POS.Domain.DTOs;
+using static YaungMel_POS.Domain.DTOs.SearchProductRequestDTO;
 
-namespace YaungMel_POS.domain.Features.Search
+namespace YaungMel_POS.Domain.Features.Search
 {
     public class SearchService : ISearchService
     {

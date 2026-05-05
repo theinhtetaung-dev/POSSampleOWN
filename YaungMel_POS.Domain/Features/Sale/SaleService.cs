@@ -1,20 +1,10 @@
-using Microsoft.AspNetCore.Http.Timeouts;
 using Microsoft.EntityFrameworkCore;
-using YaungMel_POS.domain.DTOs;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
-using YaungMel_POS.database.Data;
-using YaungMel_POS.database.Models;
-using YaungMel_POS.shared.Responses;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
+using YaungMel_POS.Domain.DTOs;
+using YaungMel_POS.Database.Data;
+using YaungMel_POS.Database.Models;
+using YaungMel_POS.Shared.Responses;
 
-namespace YaungMel_POS.domain.Features.Sale;
+namespace YaungMel_POS.Domain.Features.Sale;
 
 public class SaleService : ISaleService
 {

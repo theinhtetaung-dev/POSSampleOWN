@@ -1,12 +1,11 @@
 using Microsoft.EntityFrameworkCore;
-using System.Security.Claims;
-using System.Text.RegularExpressions;
-using YaungMel_POS.database.Data;
-using YaungMel_POS.database.Models;
-using YaungMel_POS.domain.DTOs;
-using YaungMel_POS.shared.Responses;
 
-namespace YaungMel_POS.domain.Features.Auth
+using YaungMel_POS.Database.Data;
+using YaungMel_POS.Database.Models;
+using YaungMel_POS.Domain.DTOs;
+using YaungMel_POS.Shared.Responses;
+
+namespace YaungMel_POS.Domain.Features.Auth
 {
     public class UserService : IUserService
     {

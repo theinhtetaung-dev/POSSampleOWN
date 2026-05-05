@@ -1,13 +1,13 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System.Text.RegularExpressions;
-using YaungMel_POS.database.Models;
+using YaungMel_POS.Database.Models;
 using System.Security.Cryptography;
 using System.Text;
-using YaungMel_POS.domain.DTOs;
-using YaungMel_POS.database.Data;
+using YaungMel_POS.Domain.DTOs;
+using YaungMel_POS.Database.Data;
 
-namespace YaungMel_POS.domain.Features.Auth;
+namespace YaungMel_POS.Domain.Features.Auth;
 
 public class AuthService : IAuthService
 {

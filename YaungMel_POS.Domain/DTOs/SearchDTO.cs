@@ -1,4 +1,4 @@
-﻿namespace YaungMel_POS.domain.DTOs
+﻿namespace YaungMel_POS.Domain.DTOs
 {
     public class SearchDTO
     {

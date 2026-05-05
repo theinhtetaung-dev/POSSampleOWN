@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace YaungMel_POS.domain.DTOs
+namespace YaungMel_POS.Domain.DTOs
 {
     public class StockAdjustmentDTO
     {

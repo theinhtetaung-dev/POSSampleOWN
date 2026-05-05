@@ -1,8 +1,8 @@
 using System.Threading.Tasks;
-using YaungMel_POS.domain.DTOs;
-using YaungMel_POS.shared.Responses;
+using YaungMel_POS.Domain.DTOs;
+using YaungMel_POS.Shared.Responses;
 
-namespace YaungMel_POS.domain.Features.Auth
+namespace YaungMel_POS.Domain.Features.Auth
 {
     public interface IUserService
     {

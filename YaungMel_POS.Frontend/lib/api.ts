@@ -69,6 +69,33 @@ function unwrap<T>(res: { data: ApiResponse<T> }): ApiResponse<T> {
   return res.data;
 }
 
+function normalizeCategoryListData(data: unknown): CategoryDTO[] {
+  if (Array.isArray(data)) return data as CategoryDTO[];
+  if (data && typeof data === "object" && "items" in data) {
+    const items = (data as { items?: unknown }).items;
+    if (Array.isArray(items)) return items as CategoryDTO[];
+  }
+  return [];
+}
+
+function normalizeProductListData(data: unknown): ProductDTO[] {
+  if (Array.isArray(data)) return data as ProductDTO[];
+  if (data && typeof data === "object" && "items" in data) {
+    const items = (data as { items?: unknown }).items;
+    if (Array.isArray(items)) return items as ProductDTO[];
+  }
+  return [];
+}
+
+function normalizeSalesListData(data: unknown): SaleDTO[] {
+  if (Array.isArray(data)) return data as SaleDTO[];
+  if (data && typeof data === "object" && "items" in data) {
+    const items = (data as { items?: unknown }).items;
+    if (Array.isArray(items)) return items as SaleDTO[];
+  }
+  return [];
+}
+
 // ─── Auth API ─────────────────────────────────────────────
 export const authApi = {
   login: (data: LoginRequest) =>
@@ -84,7 +111,13 @@ export const authApi = {
 // ─── Products API ─────────────────────────────────────────
 export const productsApi = {
   getAll: () =>
-    api.get<ApiResponse<ProductDTO[]>>("/api/products").then(unwrap),
+    api.get<ApiResponse<unknown>>("/api/products/paged?pageNo=1&pageSize=500").then((res) => {
+      const raw = unwrap(res);
+      return {
+        ...raw,
+        data: normalizeProductListData(raw.data),
+      } as ApiResponse<ProductDTO[]>;
+    }),
 
   getById: (id: number) =>
     api.get<ApiResponse<ProductDTO>>(`/api/products/${id}`).then(unwrap),
@@ -95,11 +128,38 @@ export const productsApi = {
   create: (data: CreateProductDTO) =>
     api.post<ApiResponse<ProductDTO>>("/api/products", data).then(unwrap),
 
+  createWithPhoto: (data: FormData) =>
+    api
+      .post<ApiResponse<ProductDTO>>("/api/products/photo-upload", data, {
+        headers: { "Content-Type": "multipart/form-data" },
+      })
+      .then(unwrap),
+
   bulkCreate: (data: CreateProductDTO[]) =>
     api.post<ApiResponse<ProductDTO[]>>("/api/products/bulk", data).then(unwrap),
 
-  update: (id: number, data: UpdateProductDTO) =>
-    api.patch<ApiResponse<ProductDTO>>(`/api/products/${id}`, data).then(unwrap),
+  update: (id: number, data: UpdateProductDTO) => {
+    const payload = new FormData();
+    if (data.name !== undefined) payload.append("name", data.name);
+    if (data.description !== undefined) payload.append("description", data.description);
+    if (data.price !== undefined) payload.append("price", String(data.price));
+    if (data.stockQuantity !== undefined) payload.append("stockQuantity", String(data.stockQuantity));
+    if (data.categoryId !== undefined) payload.append("categoryId", String(data.categoryId));
+    if (data.version !== undefined) payload.append("version", String(data.version));
+
+    return api
+      .patch<ApiResponse<ProductDTO>>(`/api/products/${id}`, payload, {
+        headers: { "Content-Type": "multipart/form-data" },
+      })
+      .then(unwrap);
+  },
+
+  updateWithPhoto: (id: number, data: FormData) =>
+    api
+      .patch<ApiResponse<ProductDTO>>(`/api/products/${id}`, data, {
+        headers: { "Content-Type": "multipart/form-data" },
+      })
+      .then(unwrap),
 
   delete: (id: number) =>
     api.delete<ApiResponse<object>>(`/api/products/${id}`).then(unwrap),
@@ -111,7 +171,13 @@ export const productsApi = {
 // ─── Categories API ───────────────────────────────────────
 export const categoriesApi = {
   getAll: () =>
-    api.get<ApiResponse<CategoryDTO[]>>("/api/categories").then(unwrap),
+    api.get<ApiResponse<unknown>>("/api/categories").then((res) => {
+      const raw = unwrap(res);
+      return {
+        ...raw,
+        data: normalizeCategoryListData(raw.data),
+      } as ApiResponse<CategoryDTO[]>;
+    }),
 
   getById: (id: number) =>
     api.get<ApiResponse<CategoryDTO>>(`/api/categories/${id}`).then(unwrap),
@@ -132,7 +198,13 @@ export const categoriesApi = {
 // ─── Sales API ────────────────────────────────────────────
 export const salesApi = {
   getAll: () =>
-    api.get<ApiResponse<SaleDTO[]>>("/api/sales").then(unwrap),
+    api.get<ApiResponse<unknown>>("/api/sales/paged?pageNo=1&pageSize=500").then((res) => {
+      const raw = unwrap(res);
+      return {
+        ...raw,
+        data: normalizeSalesListData(raw.data),
+      } as ApiResponse<SaleDTO[]>;
+    }),
 
   getById: (id: number) =>
     api.get<ApiResponse<SaleDTO>>(`/api/sales/${id}`).then(unwrap),
@@ -141,7 +213,13 @@ export const salesApi = {
     api.post<ApiResponse<SaleDTO>>("/api/sales", data).then(unwrap),
 
   searchByVoucher: (voucherCode: string) =>
-    api.get<ApiResponse<SaleDTO[]>>(`/api/sales/search?voucherCode=${encodeURIComponent(voucherCode)}`).then(unwrap),
+    api.get<ApiResponse<SaleDTO>>(`/api/sales/${encodeURIComponent(voucherCode)}`).then((res) => {
+      const raw = unwrap(res);
+      return {
+        ...raw,
+        data: raw.data ? [raw.data] : [],
+      } as ApiResponse<SaleDTO[]>;
+    }),
 };
 
 // ─── Inventory API ────────────────────────────────────────

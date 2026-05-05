@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace YaungMel_POS.database.Models;
+namespace YaungMel_POS.Database.Models;
 
 public class Tbl_Product
 {
@@ -15,9 +15,9 @@ public class Tbl_Product
     [MaxLength(500)]
     public string? Description { get; set; }
 
-    public string? imageUrl { get; set; }
+    public string? ImageUrl { get; set; }
 
-    public string? imageId { get; set; }
+    public string? ImageId { get; set; }
 
     [Required]
     [Column(TypeName = "decimal(18,2)")]

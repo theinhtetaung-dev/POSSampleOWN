@@ -1,6 +1,6 @@
-using YaungMel_POS.domain.DTOs;
+using YaungMel_POS.Domain.DTOs;
 
-namespace YaungMel_POS.domain.Features.Auth;
+namespace YaungMel_POS.Domain.Features.Auth;
 
 public interface IAuthService
 {

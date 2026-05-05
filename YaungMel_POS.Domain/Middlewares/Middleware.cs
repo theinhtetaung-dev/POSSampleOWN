@@ -7,9 +7,9 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using YaungMel_POS.domain.Features.Auth;
+using YaungMel_POS.Domain.Features.Auth;
 
-namespace YaungMel_POS.domain.Middlewares;
+namespace YaungMel_POS.Domain.Middlewares;
 
 public class Middleware
 {

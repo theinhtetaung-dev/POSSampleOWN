@@ -1,7 +1,7 @@
 using System.Security.Claims;
-using YaungMel_POS.database.Models;
+using YaungMel_POS.Database.Models;
 
-namespace YaungMel_POS.domain.Features.Auth;
+namespace YaungMel_POS.Domain.Features.Auth;
 
 public interface ITokenService
 {

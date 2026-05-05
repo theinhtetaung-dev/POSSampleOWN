@@ -1,13 +1,14 @@
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
-using YaungMel_POS.database.Models;
-using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
-using YaungMel_POS.domain.DTOs;
-using YaungMel_POS.shared.Responses;
+using System.Threading.Tasks;
+using YaungMel_POS.Database.Models;
+using YaungMel_POS.Domain.DTOs;
+using YaungMel_POS.Shared.Responses;
 
 
-namespace YaungMel_POS.domain.Features.ProductsCatalog
+namespace YaungMel_POS.Domain.Features.ProductsCatalog
 {
     [Route("api/products")]
     [ApiController]
@@ -70,7 +71,35 @@ namespace YaungMel_POS.domain.Features.ProductsCatalog
 
             if (!result.IsSuccess)
                 return BadRequest(result);
-            
+
+            return CreatedAtAction(
+                nameof(GetById),
+                new { id = result.Data!.Id },
+                result);
+        }
+
+        [HttpPost("photo-upload")]
+        public async Task<IActionResult> UploadPhoto([FromForm] CreateProductDTO createRequest, IFormFile? photoFile)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            // 1. Check if a file was actually provided
+            if (photoFile == null || photoFile.Length == 0)
+            {
+                return BadRequest("Please provide a product photo.");
+            }
+
+            // 2. Open a read stream from the IFormFile
+            using var stream = photoFile.OpenReadStream();
+
+            // 3. Pass the stream and the filename to your service
+            var fileName = string.IsNullOrWhiteSpace(photoFile.FileName) ? "uploaded-photo" : photoFile.FileName;
+            var result = await _service.CreateProductWithPhotoAsync(createRequest, stream, fileName, GetCurrentUserId());
+
+            if (!result.IsSuccess)
+                return BadRequest(result);
+
             return CreatedAtAction(
                 nameof(GetById),
                 new { id = result.Data!.Id },
@@ -96,16 +125,23 @@ namespace YaungMel_POS.domain.Features.ProductsCatalog
         // PATCH: api/products/{id}
         [Authorize(Roles = "Admin")]
         [HttpPatch("{id}")]
-        public async Task<IActionResult> Update(int id, [FromBody] UpdateProductDTO updateRequest)
+        public async Task<IActionResult> Update(int id, [FromForm] UpdateProductDTO updateRequest, IFormFile? photoFile)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var result = await _service.UpdateProductAsync(id, updateRequest, GetCurrentUserId());
+            using var stream = photoFile?.Length > 0 ? photoFile.OpenReadStream() : null;
+            var fileName = string.Empty;
+            if (photoFile != null && photoFile.Length > 0)
+            {
+                fileName = string.IsNullOrWhiteSpace(photoFile.FileName) ? "uploaded-photo" : photoFile.FileName;
+            }
+
+            var result = await _service.UpdateProductAsync(id, updateRequest, stream, fileName, GetCurrentUserId());
 
             if (!result.IsSuccess)
                 return result.Message.Contains("not found") ? NotFound(result) : BadRequest(result);
-            
+
             return Ok(result);
         }
 

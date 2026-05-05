@@ -3,11 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using YaungMel_POS.database.Data;
-using YaungMel_POS.domain.DTOs;
-using YaungMel_POS.shared.Responses;
+using YaungMel_POS.Database.Data;
+using YaungMel_POS.Domain.DTOs;
+using YaungMel_POS.Shared.Responses;
 
-namespace YaungMel_POS.domain.Features.Dashboard;
+namespace YaungMel_POS.Domain.Features.Dashboard;
 
 public class DashboardService : IDashboardService
 {

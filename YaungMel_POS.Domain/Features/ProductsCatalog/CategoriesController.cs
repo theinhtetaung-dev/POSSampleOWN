@@ -2,10 +2,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using System.Threading.Tasks;
 using System.Security.Claims;
-using YaungMel_POS.domain.DTOs;
-using YaungMel_POS.shared.Responses;
+using YaungMel_POS.Domain.DTOs;
+using YaungMel_POS.Shared.Responses;
 
-namespace YaungMel_POS.domain.Features.ProductsCatalog
+namespace YaungMel_POS.Domain.Features.ProductsCatalog
 {
     [ApiController]
     [Route("api/categories")]
@@ -82,7 +82,7 @@ namespace YaungMel_POS.domain.Features.ProductsCatalog
 
             if (!result.IsSuccess)
                 return result.Message.Contains("not found") ? NotFound(result) : BadRequest(result);
-            
+
             return Ok(result);
         }
 
@@ -90,7 +90,7 @@ namespace YaungMel_POS.domain.Features.ProductsCatalog
         [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCategory(int id)
-        {      
+        {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
@@ -98,7 +98,7 @@ namespace YaungMel_POS.domain.Features.ProductsCatalog
 
             if (!result.IsSuccess)
                 return result.Message.Contains("not found") ? NotFound(result) : BadRequest(result);
-            
+
             return Ok(result);
         }
 

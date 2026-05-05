@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using YaungMel_POS.database.Models;
+using YaungMel_POS.Database.Models;
 
-namespace YaungMel_POS.domain.DTOs;
+namespace YaungMel_POS.Domain.DTOs;
 
 public class SaleDTO
 {

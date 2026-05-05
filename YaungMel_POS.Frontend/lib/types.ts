@@ -52,6 +52,9 @@ export interface ProductDTO {
   categoryName?: string;
   isActive: boolean;
   deleteFlag: boolean;
+  version?: number;
+  imageUrl?: string;
+  imageId?: string;
   createdBy?: number;
   createdAt?: string;
   updatedAt?: string;
@@ -71,6 +74,7 @@ export interface UpdateProductDTO {
   price?: number;
   stockQuantity?: number;
   categoryId?: number;
+  version?: number;
 }
 
 // ─── Categories ──────────────────────────────────────────

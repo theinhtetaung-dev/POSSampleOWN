@@ -146,10 +146,20 @@ export default function POSPage() {
               <div key={i} className="h-32 rounded-2xl bg-[var(--bg-tertiary)] animate-[shimmer_1.5s_infinite] bg-[length:200%_100%] bg-gradient-to-r from-[var(--bg-tertiary)] via-[var(--bg-hover)] to-[var(--bg-tertiary)]" />
             )) : filtered.map((p) => {
               const inCart = cart.find((c) => c.product.id === p.id);
-              return (
-                <button key={p.id} onClick={() => addToCart(p)} className={`text-left p-4 rounded-2xl border transition-all duration-200 hover:shadow-md cursor-pointer ${inCart ? "bg-[var(--accent-primary-soft)] border-[var(--accent-primary)]" : "bg-[var(--bg-card)] border-[var(--border-primary)] hover:border-[var(--border-secondary)]"}`}>
-                  <p className="text-sm font-semibold text-[var(--text-primary)] truncate">{p.name}</p>
-                  <p className="text-lg font-bold text-[var(--accent-primary)] mt-1">MMK{p.price.toFixed(2)}</p>
+	              return (
+	                <button key={p.id} onClick={() => addToCart(p)} className={`text-left p-4 rounded-2xl border transition-all duration-200 hover:shadow-md cursor-pointer ${inCart ? "bg-[var(--accent-primary-soft)] border-[var(--accent-primary)]" : "bg-[var(--bg-card)] border-[var(--border-primary)] hover:border-[var(--border-secondary)]"}`}>
+	                  {p.imageUrl ? (
+	                    <img
+	                      src={p.imageUrl}
+	                      alt={p.name}
+	                      className="mb-3 h-24 w-full rounded-xl object-cover border border-[var(--border-primary)]"
+	                      loading="lazy"
+	                    />
+	                  ) : (
+	                    <div className="mb-3 h-24 w-full rounded-xl bg-[var(--bg-secondary)] border border-[var(--border-primary)]" />
+	                  )}
+	                  <p className="text-sm font-semibold text-[var(--text-primary)] truncate">{p.name}</p>
+	                  <p className="text-lg font-bold text-[var(--accent-primary)] mt-1">MMK{p.price.toFixed(2)}</p>
                   <div className="flex items-center justify-between mt-2">
                     <span className="text-xs text-[var(--text-tertiary)]">{p.stockQuantity} left</span>
                     {inCart && <Badge variant="primary">{inCart.quantity}x</Badge>}

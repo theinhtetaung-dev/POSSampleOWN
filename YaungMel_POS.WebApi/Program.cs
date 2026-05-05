@@ -5,14 +5,14 @@ using Microsoft.OpenApi.Models;
 using Scalar.AspNetCore;
 using Serilog;
 using System.Text;
-using YaungMel_POS.domain.Features;
-using YaungMel_POS.domain.Middlewares;
+using YaungMel_POS.Domain.Features;
+using YaungMel_POS.Domain.Middlewares;
 
 
 try
 {
     var builder = WebApplication.CreateBuilder(args);
-    
+
     Log.Logger = new LoggerConfiguration()
     .MinimumLevel.Debug()
     .WriteTo.Console()
@@ -27,7 +27,7 @@ try
 
     // Add Dependency Injection
     builder.AddDomain();
-    
+
     // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddSwaggerGen(options =>
@@ -101,7 +101,7 @@ try
         app.MapSwagger("/openapi/{documentName}.json");
         app.MapScalarApiReference();
     }
-    
+
 
     app.UseHttpsRedirection();
     app.UseCors("AllowAll");

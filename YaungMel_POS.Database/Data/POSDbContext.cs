@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
-using YaungMel_POS.database.Models;
+using YaungMel_POS.Database.Models;
 
-namespace YaungMel_POS.database.Data;
+namespace YaungMel_POS.Database.Data;
 
 public class POSDbContext: DbContext
 {

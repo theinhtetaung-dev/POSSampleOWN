@@ -3,11 +3,11 @@ using Microsoft.AspNetCore.Authorization;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Security.Claims;
-using YaungMel_POS.domain.DTOs;
-using YaungMel_POS.shared.Responses;
+using YaungMel_POS.Domain.DTOs;
+using YaungMel_POS.Shared.Responses;
 
 
-namespace YaungMel_POS.domain.Features.Sale
+namespace YaungMel_POS.Domain.Features.Sale
 {
     [Route("api/sales")]
     [ApiController]
@@ -40,8 +40,8 @@ namespace YaungMel_POS.domain.Features.Sale
             if (!result.IsSuccess)  return BadRequest(result);
             return Ok(result);
         }
-        // GET: api/sales/{id}
-        [HttpGet("{id}")]
+        // GET: api/sales/{voucherCode}
+        [HttpGet("{voucherCode}")]
         public async Task<IActionResult> GetByVoucherCode(string voucherCode)
         {
             var result = await _service.GetSaleByVoucherCodeAsync(voucherCode);

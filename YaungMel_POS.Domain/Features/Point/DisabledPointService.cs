@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using YaungMel_POS.domain.DTOs;
-using YaungMel_POS.shared;
-using YaungMel_POS.shared.Responses;
+using YaungMel_POS.Domain.DTOs;
+using YaungMel_POS.Shared;
+using YaungMel_POS.Shared.Responses;
 
-namespace YaungMel_POS.domain.Features.Point;
+namespace YaungMel_POS.Domain.Features.Point;
 
 public class DisabledPointService : IPointService
 {

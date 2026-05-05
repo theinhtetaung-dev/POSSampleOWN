@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace YaungMel_POS.domain.DTOs;
+namespace YaungMel_POS.Domain.DTOs;
 
 
 public class SalesOverviewDTO

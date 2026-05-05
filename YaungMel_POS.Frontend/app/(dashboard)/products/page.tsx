@@ -12,7 +12,7 @@ import { SkeletonTable } from "@/components/ui/Skeleton";
 import { AnimatedPage } from "@/components/ui/AnimatedPage";
 import { toast } from "@/components/ui/Toast";
 import { useAuth } from "@/lib/auth-context";
-import { Plus, Search, Edit2, Trash2, Package, Filter } from "lucide-react";
+import { Plus, Search, Edit2, Trash2, Package, Filter, Upload } from "lucide-react";
 
 export default function ProductsPage() {
   const { isAdmin } = useAuth();
@@ -25,6 +25,7 @@ export default function ProductsPage() {
   const [editProduct, setEditProduct] = useState<ProductDTO | null>(null);
   const [deleteId, setDeleteId] = useState<number | null>(null);
   const [form, setForm] = useState({ name: "", description: "", price: "", stockQuantity: "", categoryId: "" });
+  const [photoFile, setPhotoFile] = useState<File | null>(null);
   const [formLoading, setFormLoading] = useState(false);
 
   const loadData = useCallback(async () => {
@@ -49,12 +50,14 @@ export default function ProductsPage() {
 
   const openCreate = () => {
     setForm({ name: "", description: "", price: "", stockQuantity: "", categoryId: categories[0]?.id?.toString() || "" });
+    setPhotoFile(null);
     setEditProduct(null);
     setShowCreateModal(true);
   };
 
   const openEdit = (p: ProductDTO) => {
     setForm({ name: p.name, description: p.description || "", price: p.price.toString(), stockQuantity: p.stockQuantity.toString(), categoryId: p.categoryId.toString() });
+    setPhotoFile(null);
     setEditProduct(p);
     setShowCreateModal(true);
   };
@@ -66,11 +69,43 @@ export default function ProductsPage() {
     setFormLoading(true);
     try {
       if (editProduct) {
-        const res = await productsApi.update(editProduct.id, { name: form.name, description: form.description || undefined, price: Number(form.price), stockQuantity: Number(form.stockQuantity), categoryId: Number(form.categoryId) });
+        const updatePayload = {
+          name: form.name,
+          description: form.description || undefined,
+          price: Number(form.price),
+          stockQuantity: Number(form.stockQuantity),
+          categoryId: Number(form.categoryId),
+          version: editProduct.version,
+        };
+        const res = photoFile
+          ? await (() => {
+              const payload = new FormData();
+              payload.append("name", form.name);
+              payload.append("description", form.description || "");
+              payload.append("price", Number(form.price).toString());
+              payload.append("stockQuantity", Number(form.stockQuantity).toString());
+              payload.append("categoryId", Number(form.categoryId).toString());
+              payload.append("version", String(editProduct.version ?? 0));
+              payload.append("photoFile", photoFile);
+              return productsApi.updateWithPhoto(editProduct.id, payload);
+            })()
+          : await productsApi.update(editProduct.id, updatePayload);
         if (res.isSuccess) { toast("success", "Product updated"); setShowCreateModal(false); void loadData(); }
         else toast("error", res.message);
       } else {
-        const res = await productsApi.create({ name: form.name, description: form.description || undefined, price: Number(form.price), stockQuantity: Number(form.stockQuantity) || 0, categoryId: Number(form.categoryId) });
+        let res;
+        if (photoFile) {
+          const payload = new FormData();
+          payload.append("name", form.name);
+          payload.append("description", form.description || "");
+          payload.append("price", Number(form.price).toString());
+          payload.append("stockQuantity", (Number(form.stockQuantity) || 0).toString());
+          payload.append("categoryId", Number(form.categoryId).toString());
+          payload.append("photoFile", photoFile);
+          res = await productsApi.createWithPhoto(payload);
+        } else {
+          res = await productsApi.create({ name: form.name, description: form.description || undefined, price: Number(form.price), stockQuantity: Number(form.stockQuantity) || 0, categoryId: Number(form.categoryId) });
+        }
         if (res.isSuccess) { toast("success", "Product created"); setShowCreateModal(false); void loadData(); }
         else toast("error", res.message);
       }
@@ -144,9 +179,21 @@ export default function ProductsPage() {
                   {filtered.map((p) => (
                     <tr key={p.id} className="border-b border-[var(--border-primary)] last:border-0 hover:bg-[var(--bg-hover)] transition-colors">
                       <td className="py-3 px-4">
-                        <div>
-                          <p className="text-sm font-medium text-[var(--text-primary)]">{p.name}</p>
-                          {p.description && <p className="text-xs text-[var(--text-tertiary)] mt-0.5 truncate max-w-[200px]">{p.description}</p>}
+                        <div className="flex items-center gap-3">
+                          {p.imageUrl ? (
+                            <img
+                              src={p.imageUrl}
+                              alt={p.name}
+                              className="h-11 w-11 rounded-lg object-cover border border-[var(--border-primary)] shrink-0"
+                              loading="lazy"
+                            />
+                          ) : (
+                            <div className="h-11 w-11 rounded-lg border border-[var(--border-primary)] bg-[var(--bg-secondary)] shrink-0" />
+                          )}
+                          <div>
+                            <p className="text-sm font-medium text-[var(--text-primary)]">{p.name}</p>
+                            {p.description && <p className="text-xs text-[var(--text-tertiary)] mt-0.5 truncate max-w-[200px]">{p.description}</p>}
+                          </div>
                         </div>
                       </td>
                       <td className="py-3 px-4"><Badge variant="info">{getCategoryName(p.categoryId)}</Badge></td>
@@ -182,8 +229,33 @@ export default function ProductsPage() {
                 {categories.map((c) => (<option key={c.id} value={c.id}>{c.name}</option>))}
               </select>
             </div>
+            <div className="rounded-xl border border-dashed border-[var(--border-primary)] bg-[var(--bg-secondary)] p-4">
+              <div className="flex items-center justify-between gap-3">
+                <div>
+                  <p className="text-sm font-medium text-[var(--text-primary)]">
+                    {editProduct ? "Product Image" : "Product Photo"}
+                  </p>
+                  <p className="text-xs text-[var(--text-tertiary)] mt-0.5">
+                    {editProduct ? "Select a new image to update current product image." : "Upload an optional image (jpg, png, webp)"}
+                  </p>
+                  {photoFile && <p className="text-xs text-[var(--accent-primary)] mt-1">{photoFile.name}</p>}
+                </div>
+                <label className="cursor-pointer">
+                  <input
+                    type="file"
+                    accept="image/*"
+                    className="hidden"
+                    onChange={(e) => setPhotoFile(e.target.files?.[0] || null)}
+                  />
+                  <span className="inline-flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium bg-[var(--accent-primary-soft)] text-[var(--accent-primary)] hover:opacity-90 transition">
+                    <Upload size={16} />
+                    {editProduct ? "Update Image" : "Choose Photo"}
+                  </span>
+                </label>
+              </div>
+            </div>
             <div className="flex justify-end gap-3 pt-2">
-              <Button variant="secondary" onClick={() => setShowCreateModal(false)}>Cancel</Button>
+              <Button variant="secondary" onClick={() => { setShowCreateModal(false); setPhotoFile(null); }}>Cancel</Button>
               <Button onClick={handleSave} isLoading={formLoading}>{editProduct ? "Update" : "Create"}</Button>
             </div>
           </div>

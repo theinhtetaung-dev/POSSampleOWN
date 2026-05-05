@@ -5,11 +5,11 @@ using System.Net.Http.Json;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.WebUtilities;
-using YaungMel_POS.domain.DTOs;
-using YaungMel_POS.shared;
-using YaungMel_POS.shared.Responses;
+using YaungMel_POS.Domain.DTOs;
+using YaungMel_POS.Shared;
+using YaungMel_POS.Shared.Responses;
 
-namespace YaungMel_POS.domain.Features.Point;
+namespace YaungMel_POS.Domain.Features.Point;
 
 public class PointService : IPointService
 {
