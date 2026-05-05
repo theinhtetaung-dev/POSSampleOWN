@@ -7,7 +7,7 @@ Run this in POSSampleOWN\POSSampleOWN.csproj:
 Migration script:
 
 ```cmd
-dotnet ef migrations add InitialCreate --project POSSampleOWN.database --startup-project POSSampleOWN   
+dotnet ef migrations add InitialCreate --project YaungMel_POS.Database --startup-project YaungMel_POS.WebApi   
 ```
 
 ```cmd
@@ -31,7 +31,7 @@ docker compose up -d --build
 apply database migration (only run this if you are initializing the database) :
 
 ```cmd
-dotnet ef database update --project POSSampleOWN.database --startup-project POSSampleOWN
+dotnet ef database update --project YaungMel_POS.Database --startup-project YaungMel_POS.WebApi
 ```
 
 to run docker:

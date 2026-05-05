@@ -1,0 +1,6 @@
+@YaungMel_POS.WebApi_HostAddress = http://localhost:5153
+
+GET {{YaungMel_POS.WebApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

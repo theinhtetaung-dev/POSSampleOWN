@@ -12,22 +12,22 @@ EXPOSE 8081
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["POSSampleOWN/POSSampleOWN.csproj", "POSSampleOWN/"]
-COPY ["POSSampleOWN.database/POSSampleOWN.database.csproj", "POSSampleOWN.database/"]
-COPY ["POSSampleOWN.domain/POSSampleOWN.domain.csproj", "POSSampleOWN.domain/"]
-COPY ["POSSampleOWN.shared/POSSampleOWN.shared.csproj", "POSSampleOWN.shared/"]
-RUN dotnet restore "./POSSampleOWN/POSSampleOWN.csproj"
+COPY ["YaungMel_POS.WebApi/YaungMel_POS.WebApi.csproj", "YaungMel_POS/"]
+COPY ["YaungMel_POS.Database/YaungMel_POS.Database.csproj", "YaungMel_POS.Database/"]
+COPY ["YaungMel_POS.Domain/YaungMel_POS.Domain.csproj", "YaungMel_POS.Domain/"]
+COPY ["YaungMel_POS.Shared/YaungMel_POS.Shared.csproj", "YaungMel_POS.Shared/"]
+RUN dotnet restore "./YaungMel_POS/YaungMel_POS.WebApi.csproj"
 COPY . .
-WORKDIR "/src/POSSampleOWN"
-RUN dotnet build "./POSSampleOWN.csproj" -c $BUILD_CONFIGURATION -o /app/build
+WORKDIR "/src/YaungMel_POS.WebApi"
+RUN dotnet build "./YaungMel_POS.WebApi.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 # This stage is used to publish the service project to be copied to the final stage
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "./POSSampleOWN.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "./YaungMel_POS.WebApi.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
 # This stage is used in production or when running from VS in regular mode (Default when not using the Debug configuration)
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "POSSampleOWN.dll"]
+ENTRYPOINT ["dotnet", "YaungMel_POS.WebApi.dll"]

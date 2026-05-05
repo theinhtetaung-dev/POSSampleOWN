@@ -15,6 +15,10 @@ public class Tbl_Product
     [MaxLength(500)]
     public string? Description { get; set; }
 
+    public string? imageUrl { get; set; }
+
+    public string? imageId { get; set; }
+
     [Required]
     [Column(TypeName = "decimal(18,2)")]
     public decimal Price { get; set; }

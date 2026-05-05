@@ -1,9 +1,9 @@
 services:
-  possampleown:
-    image: ${DOCKER_REGISTRY-}possampleown
+  yaungmelpos:
+    image: ${DOCKER_REGISTRY-}yaungmelpos
     build:
       context: .
-      dockerfile: POSSampleOWN/Dockerfile
+      dockerfile: YaungMel_POS.WebApi/Dockerfile
     ports:
       - 5001:8080 #HTTP
       - 7144:8081 #HTTPS
