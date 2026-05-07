@@ -99,13 +99,13 @@ try
     });
 
 
-    builder.Services.AddHangfire(config =>
-    {
-        config.UsePostgreSqlStorage(options =>
-        {
-            options.UseNpgsqlConnection(builder.Configuration.GetConnectionString("HangfireConnection"));
-        });
-    });
+    //builder.Services.AddHangfire(config =>
+    //{
+    //    config.UsePostgreSqlStorage(options =>
+    //    {
+    //        options.UseNpgsqlConnection(builder.Configuration.GetConnectionString("HangfireConnection"));
+    //    });
+    //});
 
     //builder.Services.AddHangfireServer();
 
