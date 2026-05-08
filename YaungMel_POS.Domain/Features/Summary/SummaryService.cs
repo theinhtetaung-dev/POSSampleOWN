@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -87,6 +87,7 @@ public class SummaryService : ISummaryService
     {
         try
         {
+            if (pageSize <= 0) return Result<SummaryListResponseModel>.SystemError("Page size must be greater than 0.");
             var totalItems = await _db.Summaries.CountAsync();
             int pageCount = totalItems / pageSize;
             if (totalItems % pageSize > 0) pageCount++;

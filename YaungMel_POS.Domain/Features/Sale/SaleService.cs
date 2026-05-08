@@ -101,6 +101,7 @@ public class SaleService : ISaleService
     {
         try
         {
+            if (pageSize <= 0) return Result<SaleListResponseDTO>.SystemError("Page size must be greater than 0.");
             // double time hitting to database 
             var totalItems = await _db.Sales.CountAsync();
 
