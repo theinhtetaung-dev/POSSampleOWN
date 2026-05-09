@@ -89,18 +89,17 @@ try
     });
 
     // Add CORS Policy
+    var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
     builder.Services.AddCors(options =>
     {
-        options.AddPolicy("AllowAll", builder =>
-        {
-            builder.SetIsOriginAllowed(origin => 
-                    origin.EndsWith(".vercel.app") || 
-                    origin.StartsWith("http://localhost") || 
-                    origin.StartsWith("https://localhost"))
-                   .AllowAnyMethod()
-                   .AllowAnyHeader()
-                   .AllowCredentials();
-        });
+        options.AddPolicy(name: MyAllowSpecificOrigins,
+            policy =>
+            {
+                policy.WithOrigins("https://yaung-mel-pos.vercel.app", "http://localhost:3000", "http://localhost:5173")
+                      .AllowAnyHeader()
+                      .AllowAnyMethod()
+                      .AllowCredentials();
+            });
     });
 
 
@@ -136,7 +135,7 @@ try
     }
 
 
-    app.UseCors("AllowAll");
+    app.UseCors("_myAllowSpecificOrigins");
     app.UseHttpsRedirection();
     app.UseAuthentication();
     app.UseMiddleware<Middleware>();
