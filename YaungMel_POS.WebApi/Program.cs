@@ -63,6 +63,7 @@ try
     });
     });
 
+
     // Add JWT Authentication
     var jwtSettings = builder.Configuration.GetSection("JwtSettings");
     var secretKey = jwtSettings["SecretKey"] ?? "default_secret_key_at_least_32_chars_long";
