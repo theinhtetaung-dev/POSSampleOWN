@@ -24,8 +24,16 @@ namespace YaungMel_POS.Domain.Features
         public static void AddDomain(this WebApplicationBuilder builder)
         {
 
-            builder.Services.AddDbContext<POSDbContext>(options =>
-            options.UseNpgsql(builder.Configuration.GetConnectionString("POSConnectionString")));
+            if (builder.Configuration.GetValue<bool>("UseInMemoryDatabase"))
+            {
+                builder.Services.AddDbContext<POSDbContext>(options =>
+                    options.UseInMemoryDatabase("YaungMel_POS_InMemory"));
+            }
+            else
+            {
+                builder.Services.AddDbContext<POSDbContext>(options =>
+                    options.UseNpgsql(builder.Configuration.GetConnectionString("POSConnectionString")));
+            }
             var loyaltySettings = builder.Configuration.GetSection("LoyaltyApiSettings");
 
             // DinkToPDF 

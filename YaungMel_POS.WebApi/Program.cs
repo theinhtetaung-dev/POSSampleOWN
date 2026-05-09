@@ -33,12 +33,6 @@ try
     // Add Dependency Injection
     builder.AddDomain();
 
-    if (builder.Configuration.GetValue<bool>("UseInMemoryDatabase"))
-    {
-        builder.Services.AddDbContext<POSDbContext>(options =>
-            options.UseInMemoryDatabase("YaungMel_POS_InMemory"));
-    }
-
     // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddSwaggerGen(options =>
