@@ -9,6 +9,7 @@ public class ProductDTO
     public string Name { get; set; } = string.Empty;
     public string? Description { get; set; }
     public decimal Price { get; set; }
+    public string PriceFormatted { get; set; } = string.Empty;
     public int StockQuantity { get; set; }
     public int CategoryId { get; set; }
     public bool DeleteFlag { get; set; }

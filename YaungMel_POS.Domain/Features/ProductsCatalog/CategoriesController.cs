@@ -29,14 +29,14 @@ namespace YaungMel_POS.Domain.Features.ProductsCatalog
         [HttpGet]
         // GET: api/categories/paged?pageNo=1&pageSize=10
         [HttpGet("paged")]
-        public async Task<IActionResult> GetCaetgoryByPage([FromQuery] int pageNo = 1, [FromQuery] int pageSize = 10)
+        public async Task<IActionResult> Get([FromQuery] int pageNo = 1, [FromQuery] int pageSize = 10)
         {
             if (pageNo <= 0 || pageSize <= 0)
             {
                 return BadRequest("Page number and page size must be greater than zero.");
             }
 
-            var result = await _service.GetCategoriesAsync(pageNo, pageSize);
+            var result = await _service.GetAsync(pageNo, pageSize);
 
             if (!result.IsSuccess) return BadRequest(result);
 
@@ -47,7 +47,7 @@ namespace YaungMel_POS.Domain.Features.ProductsCatalog
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
-            var result = await _service.GetCategoryByIdAsync(id);
+            var result = await _service.GetByIdAsync(id);
 
             if (!result.IsSuccess) return NotFound(result);
 
@@ -62,7 +62,7 @@ namespace YaungMel_POS.Domain.Features.ProductsCatalog
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var result = await _service.CreateCategoryAsync(request, GetCurrentUserId());
+            var result = await _service.CreateAsync(request, GetCurrentUserId());
 
             if (!result.IsSuccess) return BadRequest(result);
 
@@ -79,7 +79,7 @@ namespace YaungMel_POS.Domain.Features.ProductsCatalog
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var result = await _service.UpdateCategoryAsync(id, request, GetCurrentUserId());
+            var result = await _service.UpdateAsync(id, request, GetCurrentUserId());
 
             if (!result.IsSuccess)
                 return result.Message.Contains("not found") ? NotFound(result) : BadRequest(result);
@@ -95,7 +95,7 @@ namespace YaungMel_POS.Domain.Features.ProductsCatalog
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var result = await _service.DeleteCategoryAsync(id, GetCurrentUserId());
+            var result = await _service.DeleteAsync(id, GetCurrentUserId());
 
             if (!result.IsSuccess)
                 return result.Message.Contains("not found") ? NotFound(result) : BadRequest(result);
@@ -103,21 +103,5 @@ namespace YaungMel_POS.Domain.Features.ProductsCatalog
             return Ok(result);
         }
 
-        // GET: api/categories/search?term=searchTerm
-        [HttpGet("search")]
-        public async Task<IActionResult> Search([FromQuery] string term)
-        {
-            if (string.IsNullOrWhiteSpace(term))
-                return BadRequest(Result<object>.SystemError("Search term cannot be empty."));
-
-            var result = await _service.GetCategoriesByTermAsync(term);
-
-            if (!result.IsSuccess)
-            {
-                return StatusCode(500, result);
-            }
-
-            return Ok(result);
-        }
     }
 }

@@ -18,14 +18,11 @@ namespace YaungMel_POS.Domain.Features.ProductsCatalog
     {
         private readonly POSDbContext _db;
         private readonly IPhotoService _photoService;
-        private readonly JsonSerializerOptions _jsonOptions = new() { ReferenceHandler = ReferenceHandler.IgnoreCycles };
-        private readonly IAuditService _auditService;
 
-        public ProductService(POSDbContext db, IPhotoService photoService, IAuditService auditService)
+        public ProductService(POSDbContext db, IPhotoService photoService)
         {
             _db = db;
             _photoService = photoService;
-            _auditService = auditService;
         }
 
         private IQueryable<Tbl_Product> ActiveProductQuery => _db.Products
@@ -33,7 +30,7 @@ namespace YaungMel_POS.Domain.Features.ProductsCatalog
             .Where(p => !p.DeleteFlag && p.IsActive);
 
         #region get product with pagination
-        public async Task<Result<ProductListResponseDTO>> GetProductsAsync(int pageNo, int pageSize)
+        public async Task<Result<ProductListResponseDTO>> GetAsync(int pageNo, int pageSize)
         {
             try
             {
@@ -56,6 +53,7 @@ namespace YaungMel_POS.Domain.Features.ProductsCatalog
                         Name = p.Name,
                         Description = p.Description,
                         Price = p.Price,
+                        PriceFormatted = p.Price.ToString("N0"),
                         ImageId = p.ImageId,
                         ImageUrl = p.ImageUrl,
                         StockQuantity = p.StockQuantity,
@@ -82,7 +80,7 @@ namespace YaungMel_POS.Domain.Features.ProductsCatalog
         #endregion
 
         #region get active products by id
-        public async Task<Result<ProductDTO>> GetProductByIdAsync(int id)
+        public async Task<Result<ProductDTO>> GetByIdAsync(int id)
         {
             try
             {
@@ -99,6 +97,7 @@ namespace YaungMel_POS.Domain.Features.ProductsCatalog
                     ImageUrl = product.ImageUrl,
                     ImageId = product.ImageId,
                     Price = product.Price,
+                    PriceFormatted = product.Price.ToString("N0"),
                     StockQuantity = product.StockQuantity,
                     CategoryId = product.CategoryId,
                     IsActive = product.IsActive,
@@ -111,38 +110,6 @@ namespace YaungMel_POS.Domain.Features.ProductsCatalog
             catch (Exception ex)
             {
                 return Result<ProductDTO>.SystemError(ex.Message);
-            }
-        }
-        #endregion
-
-        #region get available products
-        public async Task<Result<List<ProductDTO>>> GetAvailableProductsAsync()
-        {
-            try
-            {
-                var products = await ActiveProductQuery
-                    .Where(p => p.StockQuantity > 0)
-                    .Select(p => new ProductDTO
-                    {
-                        Id = p.Id,
-                        Name = p.Name,
-                        Description = p.Description,
-                        ImageUrl = p.ImageUrl,
-                        ImageId = p.ImageId,
-                        Price = p.Price,
-                        StockQuantity = p.StockQuantity,
-                        CategoryId = p.CategoryId,
-                        IsActive = p.IsActive,
-                        DeleteFlag = p.DeleteFlag,
-                        Version = p.xmin
-                    })
-                    .ToListAsync();
-
-                return Result<List<ProductDTO>>.Success(products);
-            }
-            catch (Exception ex)
-            {
-                return Result<List<ProductDTO>>.SystemError(ex.Message);
             }
         }
         #endregion
@@ -228,7 +195,7 @@ namespace YaungMel_POS.Domain.Features.ProductsCatalog
         //#endregion
 
         #region create product with photo upload
-        public async Task<Result<ProductDTO>> CreateProductAsync(CreateProductDTO request, Stream photoStream, string fileName, int userId)
+        public async Task<Result<ProductDTO>> CreateAsync(CreateProductDTO request, Stream photoStream, string fileName, int userId)
         {
             string photoPublicId = null;
             try
@@ -313,8 +280,8 @@ namespace YaungMel_POS.Domain.Features.ProductsCatalog
         }
         #endregion
 
-        #region bulk insert product
-        public async Task<Result<List<ProductDTO>>> BulkCreateProductsAsync(List<CreateProductDTO> request, int userId)
+        #region bulk insert product (this is for testing only)
+        public async Task<Result<List<ProductDTO>>> BulkCreateAsync(List<CreateProductDTO> request, int userId)
         {
             try
             {
@@ -354,10 +321,10 @@ namespace YaungMel_POS.Domain.Features.ProductsCatalog
                 return Result<List<ProductDTO>>.SystemError(ex.Message);
             }
         }
-        #endregion
+        #endregion (thi
 
         #region update product
-        public async Task<Result<ProductDTO>> UpdateProductAsync(int id, UpdateProductDTO request, Stream photoStream, string fileName, int userId)
+        public async Task<Result<ProductDTO>> UpdateAsync(int id, UpdateProductDTO request, Stream photoStream, string fileName, int userId)
         {
             try
             {
@@ -450,7 +417,7 @@ namespace YaungMel_POS.Domain.Features.ProductsCatalog
         #endregion
 
         #region delete product
-        public async Task<Result<bool>> DeleteProductAsync(int id, uint version, int userId)
+        public async Task<Result<bool>> DeleteAsync(int id, uint version, int userId)
         {
             try
             {
@@ -477,33 +444,6 @@ namespace YaungMel_POS.Domain.Features.ProductsCatalog
             catch (Exception ex)
             {
                 return Result<bool>.SystemError(ex.Message);
-            }
-        }
-        #endregion
-
-        #region Search Products By Term
-        public async Task<Result<List<ProductDTO>>> GetProductsByTermAsync(string term)
-        {
-            try
-            {
-                var products = await ActiveProductQuery
-                    .Where(p => p.Name.Contains(term) || p.Description != null && p.Description.Contains(term))
-                    .Select(p => new ProductDTO
-                    {
-                        Id = p.Id,
-                        Name = p.Name,
-                        Description = p.Description,
-                        Price = p.Price,
-                        StockQuantity = p.StockQuantity,
-                        CategoryId = p.CategoryId
-                    })
-                    .ToListAsync();
-
-                return Result<List<ProductDTO>>.Success(products);
-            }
-            catch (Exception ex)
-            {
-                return Result<List<ProductDTO>>.SystemError(ex.Message);
             }
         }
         #endregion

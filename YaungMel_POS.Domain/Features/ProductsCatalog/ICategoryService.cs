@@ -10,12 +10,11 @@ namespace YaungMel_POS.Domain.Features.ProductsCatalog
 {
     public interface ICategoryService
     {
-        Task<Result<CategoryDTO>> GetCategoryByIdAsync(int id);
-        Task<Result<CategoryListResponseModel>> GetCategoriesAsync(int pageNo, int pageSize);
+        Task<Result<CategoryDTO>> GetByIdAsync(int id);
+        Task<Result<CategoryListResponseModel>> GetAsync(int pageNo, int pageSize);
 
-        Task<Result<CategoryDTO>> CreateCategoryAsync(CreateCategoryDTO request, int userId);
-        Task<Result<CategoryDTO>> UpdateCategoryAsync(int id, UpdateCategoryDTO request, int userId);
-        Task<Result<List<CategoryDTO>>> GetCategoriesByTermAsync(string term);
-        Task<Result<bool>> DeleteCategoryAsync(int id, int userId);
+        Task<Result<CategoryDTO>> CreateAsync(CreateCategoryDTO request, int userId);
+        Task<Result<CategoryDTO>> UpdateAsync(int id, UpdateCategoryDTO request, int userId);
+        Task<Result<bool>> DeleteAsync(int id, int userId);
     }
 }

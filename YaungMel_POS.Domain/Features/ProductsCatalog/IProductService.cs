@@ -10,15 +10,12 @@ namespace YaungMel_POS.Domain.Features.ProductsCatalog
 {
     public interface IProductService
     {
-        Task<Result<ProductListResponseDTO>> GetProductsAsync(int pageNo, int pageSize);
+        Task<Result<ProductListResponseDTO>> GetAsync(int pageNo, int pageSize);
 
-        Task<Result<ProductDTO>> GetProductByIdAsync(int id);
-        Task<Result<List<ProductDTO>>> GetAvailableProductsAsync();
-        //Task<Result<ProductDTO>> CreateProductAsync(CreateProductDTO request, int userId);
-        Task<Result<ProductDTO>> CreateProductAsync(CreateProductDTO request, Stream photoStream, string fileName, int userId);
-        Task<Result<List<ProductDTO>>> BulkCreateProductsAsync(List<CreateProductDTO> request, int userId);
-        Task<Result<ProductDTO>> UpdateProductAsync(int id, UpdateProductDTO request, Stream photoStream, string fileName, int userId);
-        Task<Result<bool>> DeleteProductAsync(int id, uint version, int userId);
-        Task<Result<List<ProductDTO>>> GetProductsByTermAsync(string term);
+        Task<Result<ProductDTO>> GetByIdAsync(int id);
+        Task<Result<ProductDTO>> CreateAsync(CreateProductDTO request, Stream photoStream, string fileName, int userId);
+        Task<Result<List<ProductDTO>>> BulkCreateAsync(List<CreateProductDTO> request, int userId);
+        Task<Result<ProductDTO>> UpdateAsync(int id, UpdateProductDTO request, Stream photoStream, string fileName, int userId);
+        Task<Result<bool>> DeleteAsync(int id, uint version, int userId);
     }
 }

@@ -13,6 +13,7 @@ namespace YaungMel_POS.Domain.Features.ProductsCatalog
             _cloudinary = cloudinary;
         }
 
+        #region upload photo 
         public async Task<ImageUploadResult> UploadPhotoAsync(Stream photoStream, string fileName)
         {
             try
@@ -62,12 +63,15 @@ namespace YaungMel_POS.Domain.Features.ProductsCatalog
                 };
             }
         }
+        #endregion
 
+        #region delete photo
         public async Task<DeletionResult> DeletePhotoAsync(string publicId)
         {
             var deletionParams = new DeletionParams(publicId);
             var result = await _cloudinary.DestroyAsync(deletionParams);
             return result;
         }
+        #endregion
     }
 }

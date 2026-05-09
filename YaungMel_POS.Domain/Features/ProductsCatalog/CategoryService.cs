@@ -17,17 +17,14 @@ namespace YaungMel_POS.Domain.Features.ProductsCatalog
     public class CategoryService : ICategoryService
     {
         private readonly POSDbContext _db;
-        private readonly IAuditService _auditService;
-        private readonly JsonSerializerOptions _jsonOptions = new() { ReferenceHandler = ReferenceHandler.IgnoreCycles };
-
-        public CategoryService(POSDbContext db, IAuditService auditService)
+       
+        public CategoryService(POSDbContext db)
         {
             _db = db;
-            _auditService = auditService;
         }
 
-        #region get categories pagination
-        public async Task<Result<CategoryListResponseModel>> GetCategoriesAsync(int pageNo, int pageSize)
+        #region get categories with pagination
+        public async Task<Result<CategoryListResponseModel>> GetAsync(int pageNo, int pageSize)
         {
             try
             {
@@ -68,7 +65,7 @@ namespace YaungMel_POS.Domain.Features.ProductsCatalog
         #endregion
 
         #region get category by id
-        public async Task<Result<CategoryDTO>> GetCategoryByIdAsync(int id)
+        public async Task<Result<CategoryDTO>> GetByIdAsync(int id)
         {
             try
             {
@@ -96,7 +93,7 @@ namespace YaungMel_POS.Domain.Features.ProductsCatalog
         #endregion
 
         #region create category
-        public async Task<Result<CategoryDTO>> CreateCategoryAsync(CreateCategoryDTO request, int userId)
+        public async Task<Result<CategoryDTO>> CreateAsync(CreateCategoryDTO request, int userId)
         {
             try
             {
@@ -133,7 +130,7 @@ namespace YaungMel_POS.Domain.Features.ProductsCatalog
         #endregion
 
         #region update category
-        public async Task<Result<CategoryDTO>> UpdateCategoryAsync(int id, UpdateCategoryDTO request, int userId)
+        public async Task<Result<CategoryDTO>> UpdateAsync(int id, UpdateCategoryDTO request, int userId)
         {
             try
             {
@@ -180,7 +177,7 @@ namespace YaungMel_POS.Domain.Features.ProductsCatalog
         #endregion
 
         #region delete category
-        public async Task<Result<bool>> DeleteCategoryAsync(int id, int userId)
+        public async Task<Result<bool>> DeleteAsync(int id, int userId)
         {
             try
             {
@@ -203,31 +200,6 @@ namespace YaungMel_POS.Domain.Features.ProductsCatalog
             catch (Exception ex)
             {
                 return Result<bool>.SystemError(ex.Message);
-            }
-        }
-        #endregion
-
-        #region get categories by term
-        public async Task<Result<List<CategoryDTO>>> GetCategoriesByTermAsync(string term)
-        {
-            try
-            {
-                var categories = await _db.Categories
-                    .AsNoTracking()
-                    .Where(c => c.Name.Contains(term) || c.Description != null && c.Description.Contains(term))
-                    .Select(c => new CategoryDTO
-                    {
-                        Id = c.Id,
-                        Name = c.Name,
-                        Description = c.Description
-                    })
-                    .ToListAsync();
-
-                return Result<List<CategoryDTO>>.Success(categories);
-            }
-            catch (Exception ex)
-            {
-                return Result<List<CategoryDTO>>.SystemError(ex.Message);
             }
         }
         #endregion
