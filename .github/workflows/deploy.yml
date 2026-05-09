@@ -1,0 +1,59 @@
+name: Deploy Backend to Hugging Face Spaces
+
+on:
+  push:
+    branches: [ main, master ]
+    paths:
+      - 'YaungMel_POS.WebApi/**'
+      - 'YaungMel_POS.Domain/**'
+      - 'YaungMel_POS.Shared/**'
+      - 'YaungMel_POS.Database/**'
+      - 'Dockerfile'
+      - '.github/workflows/deploy.yml'
+  workflow_dispatch:   # Allows manual trigger
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          lfs: true
+
+      - name: Prepare files for HF Space
+        run: |
+          # Remove frontend to save space and avoid confusion in the backend Space
+          rm -rf YaungMel_POS.Frontend
+
+          # Remove IDE and build artifacts
+          rm -rf .vs .idea .vscode bin obj
+
+          # Ensure Dockerfile is at the root (it already is, but we want to be sure)
+          # The directory structure for other projects is preserved.
+          ls -R
+
+      # Update README.md with HF config (critical for Docker Space)
+      - name: Add HF Space configuration
+        run: |
+          cat > README.md << EOF
+          ---
+          title: YaungMel POS Backend
+          emoji: 🛒
+          colorFrom: blue
+          colorTo: purple
+          sdk: docker
+          app_port: 7860
+          ---
+
+          # YaungMel POS WebApi
+          .NET Backend for POS System
+          EOF
+
+      - name: Sync to Hugging Face
+        uses: huggingface/hub-sync@v0.1.0
+        with:
+          repo_id: P-Wint/YaungMelPOS-API
+          repo_type: space
+          token: ${{ secrets.HF_TOKEN }}
