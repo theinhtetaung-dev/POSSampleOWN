@@ -33,6 +33,12 @@ try
     // Add Dependency Injection
     builder.AddDomain();
 
+    if (builder.Configuration.GetValue<bool>("UseInMemoryDatabase"))
+    {
+        builder.Services.AddDbContext<POSDbContext>(options =>
+            options.UseInMemoryDatabase("YaungMel_POS_InMemory"));
+    }
+
     // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddSwaggerGen(options =>
@@ -109,14 +115,20 @@ try
 
     var app = builder.Build();
 
-    //using (var scope = app.Services.CreateScope())
-    //{
-    //    var db = scope.ServiceProvider.GetRequiredService<POSDbContext>();
+    using (var scope = app.Services.CreateScope())
+    {
+        var db = scope.ServiceProvider.GetRequiredService<POSDbContext>();
 
-    //    await db.Database.MigrateAsync();
-
-    //    await DatabaseSeeder.SeedAsync(app.Services);
-    //}
+        if (db.Database.IsInMemory())
+        {
+            await DatabaseSeeder.SeedAsync(app.Services);
+        }
+        else
+        {
+            await db.Database.MigrateAsync();
+            await DatabaseSeeder.SeedAsync(app.Services);
+        }
+    }
 
     // Configure the HTTP request pipeline.
     if (app.Environment.IsDevelopment())
