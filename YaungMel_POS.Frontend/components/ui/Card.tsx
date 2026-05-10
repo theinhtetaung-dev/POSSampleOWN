@@ -42,21 +42,29 @@ export function Card({
 interface CardHeaderProps {
   title: string;
   subtitle?: string;
+  icon?: ReactNode;
   action?: ReactNode;
 }
 
-export function CardHeader({ title, subtitle, action }: CardHeaderProps) {
+export function CardHeader({ title, subtitle, icon, action }: CardHeaderProps) {
   return (
     <div className="flex items-start justify-between mb-4">
-      <div>
-        <h3 className="text-base font-semibold text-[var(--text-primary)]">
-          {title}
-        </h3>
-        {subtitle && (
-          <p className="text-xs text-[var(--text-tertiary)] mt-0.5">
-            {subtitle}
-          </p>
+      <div className="flex items-start gap-3">
+        {icon && (
+          <div className="mt-1 shrink-0">
+            {icon}
+          </div>
         )}
+        <div>
+          <h3 className="text-base font-semibold text-[var(--text-primary)]">
+            {title}
+          </h3>
+          {subtitle && (
+            <p className="text-xs text-[var(--text-tertiary)] mt-0.5">
+              {subtitle}
+            </p>
+          )}
+        </div>
       </div>
       {action && <div>{action}</div>}
     </div>
