@@ -28,5 +28,22 @@ RUN dotnet publish "./YaungMel_POS.WebApi.csproj" -c $BUILD_CONFIGURATION -o /ap
 # This stage is used in production or when running from VS in regular mode (Default when not using the Debug configuration)
 FROM base AS final
 WORKDIR /app
+USER root
+RUN apt-get update && apt-get install -y \
+    fontconfig \
+    libfreetype6 \
+    libjpeg62-turbo \
+    libpng16-16 \
+    libx11-6 \
+    libxcb1 \
+    libxext6 \
+    libxrender1 \
+    xfonts-75dpi \
+    xfonts-base \
+    wget \
+    && wget https://github.com/wkhtmltopdf/packaging/releases/download/0.12.6.1-2/wkhtmltox_0.12.6.1-2.jammy_amd64.deb \
+    && dpkg -i wkhtmltox_0.12.6.1-2.jammy_amd64.deb \
+    && apt-get install -f -y \
+    && rm wkhtmltox_0.12.6.1-2.jammy_amd64.deb
 COPY --from=publish /app/publish .
 ENTRYPOINT ["dotnet", "YaungMel_POS.WebApi.dll"]
