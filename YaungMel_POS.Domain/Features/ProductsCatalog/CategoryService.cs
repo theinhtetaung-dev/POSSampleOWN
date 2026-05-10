@@ -31,6 +31,7 @@ namespace YaungMel_POS.Domain.Features.ProductsCatalog
                 if (pageSize <= 0) return Result<CategoryListResponseModel>.SystemError("Page size must be greater than 0.");
                 var totalItems = await _db.Categories
                     .AsNoTracking()
+                    .Where(c => !c.DeleteFlag)
                     .CountAsync();
 
                 var pageCount = totalItems / pageSize;
@@ -38,6 +39,7 @@ namespace YaungMel_POS.Domain.Features.ProductsCatalog
 
                 var categories = await _db.Categories
                     .AsNoTracking()
+                    .Where(c => !c.DeleteFlag)
                     .OrderByDescending(c => c.Id)
                     .Skip((pageNo - 1) * pageSize)
                     .Take(pageSize)
@@ -71,7 +73,7 @@ namespace YaungMel_POS.Domain.Features.ProductsCatalog
             {
                 var category = await _db.Categories
                     .AsNoTracking()
-                    .FirstOrDefaultAsync(c => c.Id == id);
+                    .FirstOrDefaultAsync(c => c.Id == id && !c.DeleteFlag);
 
                 if (category is null) return Result<CategoryDTO>.NotFound("Category not found.");
 

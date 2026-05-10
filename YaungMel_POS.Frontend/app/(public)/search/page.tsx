@@ -47,8 +47,7 @@ export default function SearchPage() {
           // Safeguard: handle both array and paged object formats
           const rawData = searchRes.data as any;
           const items = Array.isArray(rawData) ? rawData : (rawData?.items || []);
-          const sortedResults = [...items].sort((a: any, b: any) => a.name.localeCompare(b.name));
-          setResults(sortedResults);
+          setResults(items);
           
           if (rawData?.pageSetting) {
             setPageSetting(rawData.pageSetting);
@@ -65,6 +64,11 @@ export default function SearchPage() {
   }, []);
 
   const handleSearch = async (page: number = 1) => {
+    if (filters.MinPrice !== undefined && filters.MaxPrice !== undefined && filters.MaxPrice < filters.MinPrice) {
+      toast("error", "Max Price must be greater than or equal to Min Price");
+      return;
+    }
+
     const updatedFilters = { ...filters, PageNumber: page };
     setFilters(updatedFilters);
     setIsSearching(true);
@@ -73,8 +77,7 @@ export default function SearchPage() {
       if (res.isSuccess && res.data) {
         const rawData = res.data as any;
         const items = Array.isArray(rawData) ? rawData : (rawData?.items || []);
-        const sortedResults = [...items].sort((a: any, b: any) => a.name.localeCompare(b.name));
-        setResults(sortedResults);
+        setResults(items);
         
         if (rawData?.pageSetting) {
           setPageSetting(rawData.pageSetting);
@@ -96,8 +99,7 @@ export default function SearchPage() {
       if (res.isSuccess && res.data) {
         const rawData = res.data as any;
         const items = Array.isArray(rawData) ? rawData : (rawData?.items || []);
-        const sortedResults = [...items].sort((a: any, b: any) => a.name.localeCompare(b.name));
-        setResults(sortedResults);
+        setResults(items);
         
         if (rawData?.pageSetting) {
           setPageSetting(rawData.pageSetting);
