@@ -13,9 +13,9 @@ public static class DatabaseSeeder
 
 
         //Clear all tables and restart identities
-        //await db.Database.ExecuteSqlRawAsync(@"
-        //    TRUNCATE TABLE ""Tbl_Summary"", ""Tbl_SaleItem"", ""Tbl_Sale"", ""Tbl_Product"", ""Tbl_Category"", ""Tbl_User"", ""Tbl_User_Token"", ""Tbl_AuditLog"" RESTART IDENTITY CASCADE;
-        //");
+        await db.Database.ExecuteSqlRawAsync(@"
+           TRUNCATE TABLE ""Tbl_Summary"", ""Tbl_SaleItem"", ""Tbl_Sale"", ""Tbl_Product"", ""Tbl_Category"", ""Tbl_User"", ""Tbl_User_Token"", ""Tbl_AuditLog"" RESTART IDENTITY CASCADE;
+        ");
 
         var random = new Random();
 
@@ -57,8 +57,10 @@ public static class DatabaseSeeder
             await db.SaveChangesAsync();
         }
 
-        var adminUser = await db.Users.FirstOrDefaultAsync(u => u.Role == Tbl_User.UserRole.Admin);
-        var staffUser = await db.Users.FirstOrDefaultAsync(u => u.Role == Tbl_User.UserRole.Staff);
+        var adminUser = await db.Users.FirstOrDefaultAsync(u => u.Role == Tbl_User.UserRole.Admin) 
+            ?? throw new Exception("Admin user not found for seeding");
+        var staffUser = await db.Users.FirstOrDefaultAsync(u => u.Role == Tbl_User.UserRole.Staff)
+            ?? throw new Exception("Staff user not found for seeding");
 
         // ───────────────── CATEGORIES ─────────────────
         if (!await db.Categories.AnyAsync())
@@ -239,6 +241,7 @@ public static class DatabaseSeeder
 
             for (int day = 0; day < 30; day++)
             {
+                var createdDate = DateTime.UtcNow.Date.AddDays(-day);
                 var saleCountPerDay = random.Next(5, 15);
 
                 for (int s = 0; s < saleCountPerDay; s++)
