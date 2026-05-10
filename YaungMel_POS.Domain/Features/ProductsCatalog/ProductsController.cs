@@ -60,17 +60,15 @@ namespace YaungMel_POS.Domain.Features.ProductsCatalog
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            // 1. Check if a file was actually provided
-            if (photoFile == null || photoFile.Length == 0)
+            // 1. Check if a file was provided (optional)
+            Stream? stream = null;
+            string fileName = string.Empty;
+            if (photoFile != null && photoFile.Length > 0)
             {
-                return BadRequest("Please provide a product photo.");
+                stream = photoFile.OpenReadStream();
+                fileName = string.IsNullOrWhiteSpace(photoFile.FileName) ? "uploaded-photo" : photoFile.FileName;
             }
 
-            // 2. Open a read stream from the IFormFile
-            using var stream = photoFile.OpenReadStream();
-
-            // 3. Pass the stream and the filename to service
-            var fileName = string.IsNullOrWhiteSpace(photoFile.FileName) ? "uploaded-photo" : photoFile.FileName;
             var result = await _service.CreateAsync(createRequest, stream, fileName, GetCurrentUserId());
 
             if (!result.IsSuccess)

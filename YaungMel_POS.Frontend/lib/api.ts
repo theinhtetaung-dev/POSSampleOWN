@@ -137,15 +137,27 @@ export const productsApi = {
       } as ApiResponse<ProductDTO[]>;
     }),
 
-  create: (data: CreateProductDTO) =>
-    api.post<ApiResponse<ProductDTO>>("/api/products", data).then(unwrap),
+  create: (data: CreateProductDTO | FormData) => {
+    if (data instanceof FormData) {
+      return api.post<ApiResponse<ProductDTO>>("/api/products", data, {
+        headers: { "Content-Type": "multipart/form-data" },
+      }).then(unwrap);
+    }
+    const payload = new FormData();
+    payload.append("name", data.name);
+    if (data.description) payload.append("description", data.description);
+    payload.append("price", String(data.price));
+    payload.append("stockQuantity", String(data.stockQuantity));
+    payload.append("categoryId", String(data.categoryId));
+    return api.post<ApiResponse<ProductDTO>>("/api/products", payload, {
+      headers: { "Content-Type": "multipart/form-data" },
+    }).then(unwrap);
+  },
 
   createWithPhoto: (data: FormData) =>
-    api
-      .post<ApiResponse<ProductDTO>>("/api/products/photo-upload", data, {
-        headers: { "Content-Type": "multipart/form-data" },
-      })
-      .then(unwrap),
+    api.post<ApiResponse<ProductDTO>>("/api/products", data, {
+      headers: { "Content-Type": "multipart/form-data" },
+    }).then(unwrap),
 
   bulkCreate: (data: CreateProductDTO[]) =>
     api.post<ApiResponse<ProductDTO[]>>("/api/products/bulk", data).then(unwrap),

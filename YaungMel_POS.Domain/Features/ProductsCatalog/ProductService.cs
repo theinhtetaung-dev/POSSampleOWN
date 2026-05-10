@@ -195,7 +195,7 @@ namespace YaungMel_POS.Domain.Features.ProductsCatalog
         //#endregion
 
         #region create product with photo upload
-        public async Task<Result<ProductDTO>> CreateAsync(CreateProductDTO request, Stream photoStream, string fileName, int userId)
+        public async Task<Result<ProductDTO>> CreateAsync(CreateProductDTO request, Stream? photoStream, string fileName, int userId)
         {
             string photoPublicId = null;
             try
@@ -324,7 +324,7 @@ namespace YaungMel_POS.Domain.Features.ProductsCatalog
         #endregion (thi
 
         #region update product
-        public async Task<Result<ProductDTO>> UpdateAsync(int id, UpdateProductDTO request, Stream photoStream, string fileName, int userId)
+        public async Task<Result<ProductDTO>> UpdateAsync(int id, UpdateProductDTO request, Stream? photoStream, string fileName, int userId)
         {
             try
             {
